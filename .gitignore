@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+# 個人データを誤ってコミットしないため
+*.csv
+*.tsv
+*.cardbackup
+*.json.enc
+private/

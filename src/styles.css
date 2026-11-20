@@ -1,0 +1,808 @@
+:root {
+  --teal: #0abab5;
+  --teal-text: #077f7b; /* 白地の文字用（#0ABAB5 は白地の文字だとコントラスト不足） */
+  --teal-soft: #e1f5f4;
+  --mint: #5fe0dc;
+  --ink: #03201f;
+  --ink-soft: rgba(3, 32, 31, 0.12);
+  --sub: #4a5e5e;
+  --line: #e3eae9;
+  --bg: #ffffff;
+  --soft: #f2f6f5;
+  --warn: #a84f0c;
+  --danger: #b3261e;
+  --tabbar-h: calc(72px + env(safe-area-inset-bottom));
+  --font: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', system-ui, -apple-system, sans-serif;
+  --num: 'Archivo', var(--font);
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+h1 {
+  font-size: 22px;
+  font-weight: 900;
+}
+h2 {
+  font-size: 17px;
+  font-weight: 900;
+}
+h3 {
+  font-size: 15px;
+  font-weight: 900;
+}
+:focus-visible {
+  outline: 3px solid var(--teal-text);
+  outline-offset: 2px;
+}
+
+.num {
+  font-family: var(--num);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.sub {
+  color: var(--sub);
+}
+.small {
+  font-size: 13px;
+}
+.tiny {
+  font-size: 12px;
+}
+.warn {
+  color: var(--warn);
+}
+.danger {
+  color: var(--danger);
+}
+.teal-text {
+  color: var(--teal-text);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.between {
+  justify-content: space-between;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+.gap-4 {
+  gap: 4px;
+}
+.gap-8 {
+  gap: 8px;
+}
+.gap-12 {
+  gap: 12px;
+}
+.gap-16 {
+  gap: 16px;
+}
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---- レイアウト ---- */
+main {
+  min-height: 100vh;
+  padding-bottom: calc(var(--tabbar-h) + 24px);
+}
+.page {
+  padding: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.page-head {
+  padding: calc(16px + env(safe-area-inset-top)) 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ---- ヒーロー（ティールのブロック） ---- */
+.hero {
+  background: var(--teal);
+  color: var(--ink);
+  padding: calc(16px + env(safe-area-inset-top)) 20px 24px;
+  border-radius: 0 0 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hero-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.hero-amount .yen {
+  font-size: 30px;
+}
+.hero-amount .big {
+  font-size: 64px;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.hero-bar {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(3, 32, 31, 0.18);
+  overflow: hidden;
+}
+.hero-bar > div {
+  height: 100%;
+  background: var(--ink);
+  border-radius: 999px;
+}
+.hero-bar.over > div {
+  background: var(--warn);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 6px 12px;
+  border: 0;
+  background: var(--ink-soft);
+  color: var(--ink);
+}
+.pill.dark {
+  background: var(--ink);
+  color: var(--mint);
+}
+.pill.soft {
+  background: var(--teal-soft);
+  color: var(--teal-text);
+}
+.pill.warn {
+  background: #fdeee2;
+  color: var(--warn);
+}
+
+/* ---- ボタン ---- */
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+.icon-btn.plain {
+  background: var(--soft);
+}
+.btn {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--teal);
+  color: var(--ink);
+  font-weight: 900;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn.ink {
+  background: var(--ink);
+  color: #fff;
+}
+.btn.ghost {
+  background: var(--soft);
+  color: var(--ink);
+}
+.btn.outline {
+  background: transparent;
+  border: 2px solid var(--ink);
+}
+.btn.danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn.block {
+  width: 100%;
+}
+.btn.small {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+.link-btn {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  color: var(--teal-text);
+  font-weight: 700;
+  min-height: 44px;
+}
+
+/* ---- カード・リスト ---- */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+}
+.card.soft {
+  background: var(--soft);
+  border-color: transparent;
+}
+.card.strong {
+  border: 2px solid var(--ink);
+}
+.eyebrow {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: var(--teal-text);
+}
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  width: 100%;
+  text-align: left;
+}
+.list-row:last-child {
+  border-bottom: 0;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--sub);
+}
+
+.stack-bar {
+  height: 16px;
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+  gap: 2px;
+  background: var(--soft);
+}
+.legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 14px;
+  font-size: 13px;
+}
+.legend > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.legend b {
+  margin-left: auto;
+  font-family: var(--num);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.stat {
+  background: var(--soft);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat .num {
+  font-size: 22px;
+}
+
+/* ---- 棒グラフ ---- */
+.bars {
+  position: relative;
+  height: 140px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+}
+.bars .bar {
+  background: #c8d3d2;
+  border-radius: 6px 6px 0 0;
+  min-height: 2px;
+  position: relative;
+}
+.bars .bar.on {
+  background: var(--teal);
+}
+.bars .goal-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed var(--ink);
+  pointer-events: none;
+}
+.bar-labels {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--sub);
+}
+.bar-labels .on {
+  color: var(--ink);
+  font-weight: 900;
+}
+
+/* ---- 月の切り替え ---- */
+.month-switch {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.month-switch .label {
+  font-size: 15px;
+  font-weight: 900;
+  min-width: 96px;
+  text-align: center;
+}
+
+/* ---- セグメント ---- */
+.seg {
+  display: flex;
+  background: var(--soft);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 3px;
+}
+.seg button {
+  flex: 1;
+  min-height: 40px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sub);
+}
+.seg button.on {
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(3, 32, 31, 0.15);
+}
+.need-toggle {
+  display: flex;
+  gap: 6px;
+}
+.need-toggle button {
+  min-height: 32px;
+  min-width: 44px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sub);
+}
+.need-toggle button.on-need {
+  background: var(--teal-soft);
+  border-color: var(--teal);
+  color: var(--teal-text);
+}
+.need-toggle button.on-want {
+  background: #fdeee2;
+  border-color: #e58a3a;
+  color: var(--warn);
+}
+
+/* ---- フォーム ---- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sub);
+}
+.input,
+select.input,
+textarea.input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #c5d3d2;
+  background: var(--bg);
+  font-size: 16px; /* 16px 未満だと iOS がズームする */
+}
+textarea.input {
+  min-height: 120px;
+  resize: vertical;
+}
+.input:focus {
+  border-color: var(--teal-text);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--teal-soft);
+}
+.amount-input {
+  font-family: var(--num);
+  font-weight: 900;
+  font-size: 40px;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  border-radius: 0;
+  padding: 4px 0;
+  width: 100%;
+  background: transparent;
+}
+.amount-input:focus {
+  outline: none;
+  border-bottom-color: var(--teal-text);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.chips button {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chips button.on {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-size: 14px;
+}
+.check input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--teal-text);
+}
+
+/* ---- タブバー ---- */
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--tabbar-h);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--ink);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  z-index: 10;
+}
+.tabbar button {
+  background: none;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 11px;
+  color: #a9bdbd;
+  min-height: 52px;
+  justify-content: center;
+}
+.tabbar button.on {
+  color: var(--mint);
+  font-weight: 700;
+}
+.tabbar .add {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+/* ---- シート（下から出るダイアログ） ---- */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 32, 31, 0.45);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.sheet {
+  background: var(--bg);
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 8px 20px;
+}
+.sheet-body {
+  padding: 8px 20px calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---- 全画面ページ（設定など） ---- */
+.full {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 40;
+  overflow-y: auto;
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
+}
+.group {
+  border-bottom: 1px solid var(--line);
+}
+.group > button {
+  width: 100%;
+  min-height: 56px;
+  background: none;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+}
+.group-body {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---- ロック画面 ---- */
+.lock {
+  min-height: 100vh;
+  background: var(--teal);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: calc(24px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));
+}
+.pin-dots {
+  display: flex;
+  gap: 14px;
+  min-height: 16px;
+}
+.pin-dots span {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+}
+.pin-dots span.on {
+  background: var(--ink);
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 76px);
+  gap: 14px;
+}
+.keypad button {
+  height: 76px;
+  border-radius: 999px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.35);
+  font-family: var(--num);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.keypad button.fn {
+  background: transparent;
+  font-family: var(--font);
+  font-size: 14px;
+}
+.lock .input {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: transparent;
+}
+.lock-msg {
+  min-height: 22px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+.shake {
+  animation: shake 0.35s;
+}
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+/* バックグラウンド時に画面の中身を隠す（アプリ切り替え画面に明細を映さない） */
+.veil {
+  position: fixed;
+  inset: 0;
+  background: var(--teal);
+  z-index: 1000;
+  display: none;
+}
+body.veiled .veil {
+  display: block;
+}
+
+/* ---- トースト ---- */
+.toast-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--tabbar-h) + 12px);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 100;
+  padding: 0 16px;
+}
+.toast {
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  max-width: 420px;
+}
+
+.empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--sub);
+  font-size: 14px;
+}
+.notice {
+  background: var(--teal-soft);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+.notice.warn {
+  background: #fdeee2;
+  color: #5c2c06;
+}
+ol.howto,
+ul.plain {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.table-scroll table {
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 100%;
+}
+.table-scroll td,
+.table-scroll th {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+  text-align: left;
+}
