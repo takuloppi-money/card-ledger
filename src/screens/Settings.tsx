@@ -12,8 +12,9 @@ import type { Card } from '../lib/types';
 import { BackupExport, BackupRestore } from './BackupPanel';
 import { CardForm } from './CardForm';
 import { CsvImport } from './CsvImport';
+import { FONT_SIZES, getFontSize, setFontSize, type FontSize } from '../lib/fontSize';
 
-type Section = 'cards' | 'cats' | 'goal' | 'csv' | 'lock' | 'backup' | 'restore' | 'about' | null;
+type Section = 'font' | 'cards' | 'cats' | 'goal' | 'csv' | 'lock' | 'backup' | 'restore' | 'about' | null;
 
 export function Settings({ onClose, onLock }: { onClose: () => void; onLock: () => void }) {
   const [open, setOpen] = useState<Section>(null);
@@ -37,6 +38,9 @@ export function Settings({ onClose, onLock }: { onClose: () => void; onLock: () 
       </Group>
       <Group title="カテゴリと自動分類" open={open === 'cats'} onToggle={() => toggle('cats')}>
         <Categories />
+      </Group>
+      <Group title="文字の大きさ" open={open === 'font'} onToggle={() => toggle('font')}>
+        <FontSizeSetting />
       </Group>
       <Group title="ロック（PIN・指紋・顔認証）" open={open === 'lock'} onToggle={() => toggle('lock')}>
         <LockSettings />
@@ -414,6 +418,24 @@ function LockSettings() {
         現在：{meta?.mode === 'pin' ? '数字のPIN' : 'パスワード'}
         {meta?.bio ? ' ＋ 指紋・顔認証' : ''} ・ 鍵の導出 PBKDF2-SHA256 {meta?.iterations.toLocaleString()}回
       </p>
+    </div>
+  );
+}
+
+function FontSizeSetting() {
+  const [size, setSize] = useState<FontSize>(getFontSize());
+  return (
+    <div className="col gap-12">
+      <Seg
+        label="文字の大きさ"
+        value={size}
+        onChange={(v) => {
+          setSize(v);
+          setFontSize(v);
+        }}
+        options={FONT_SIZES.map(([k, label]) => [k, label] as [FontSize, string])}
+      />
+      <p className="small sub">この端末の表示だけに反映されます。ロック画面にも反映されます。</p>
     </div>
   );
 }

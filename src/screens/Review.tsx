@@ -222,7 +222,7 @@ function ClaudeAdvisor({ month }: { month: string }) {
             />
             店名も含める（より具体的な助言になります）
           </label>
-          <textarea className="input" readOnly value={text} aria-label="送信する内容" style={{ minHeight: 220, fontSize: 13 }} />
+          <textarea className="input" readOnly value={text} aria-label="送信する内容" style={{ minHeight: 220, fontSize: '0.8667rem' }} />
           <div className="row">
             <button className="btn grow" onClick={share}>
               <Icon name="share" /> Claudeに送る

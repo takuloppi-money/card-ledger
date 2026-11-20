@@ -60,7 +60,7 @@ export function Txns({ month, setMonth, onEdit }: { month: string; setMonth: (m:
         )}
         <div className="row between">
           <span className="sub small">{list.count}件</span>
-          <span className="num" style={{ fontSize: 20 }}>
+          <span className="num" style={{ fontSize: '1.3333rem' }}>
             {fmtYen(list.total)}
           </span>
         </div>

@@ -22,15 +22,35 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  font-size: 13.5px; /* 文字の大きさの設定で上書きする（全体の基準） */
+}
 html,
 body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 15px;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+}
+body {
+  font-size: 1rem;
+}
+/* ロック画面・初回設定などはここでスクロールする */
+#root {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* メイン画面：中身（main）だけがスクロールし、タブバーは画面下に固定される */
+.app-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 button,
@@ -54,15 +74,15 @@ p {
   margin: 0;
 }
 h1 {
-  font-size: 22px;
+  font-size: 1.4667rem;
   font-weight: 900;
 }
 h2 {
-  font-size: 17px;
+  font-size: 1.1333rem;
   font-weight: 900;
 }
 h3 {
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 900;
 }
 :focus-visible {
@@ -80,10 +100,10 @@ h3 {
   color: var(--sub);
 }
 .small {
-  font-size: 13px;
+  font-size: 0.8667rem;
 }
 .tiny {
-  font-size: 12px;
+  font-size: 0.8rem;
 }
 .warn {
   color: var(--warn);
@@ -134,8 +154,12 @@ h3 {
 
 /* ---- レイアウト ---- */
 main {
-  min-height: 100vh;
-  padding-bottom: calc(var(--tabbar-h) + 24px);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  padding-bottom: 24px;
 }
 .page {
   padding: 20px 20px 0;
@@ -167,10 +191,10 @@ main {
   gap: 4px;
 }
 .hero-amount .yen {
-  font-size: 30px;
+  font-size: 2rem;
 }
 .hero-amount .big {
-  font-size: 64px;
+  font-size: 4.2667rem;
   line-height: 0.95;
   letter-spacing: -0.03em;
 }
@@ -192,7 +216,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 700;
   border-radius: 999px;
   padding: 6px 12px;
@@ -237,7 +261,7 @@ main {
   background: var(--teal);
   color: var(--ink);
   font-weight: 900;
-  font-size: 15px;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -265,7 +289,7 @@ main {
 .btn.small {
   min-height: 40px;
   padding: 0 14px;
-  font-size: 13px;
+  font-size: 0.8667rem;
 }
 .link-btn {
   background: none;
@@ -291,7 +315,7 @@ main {
   border: 2px solid var(--ink);
 }
 .eyebrow {
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.06em;
   color: var(--teal-text);
@@ -327,7 +351,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 0.7333rem;
   color: var(--sub);
 }
 
@@ -343,7 +367,7 @@ main {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px 14px;
-  font-size: 13px;
+  font-size: 0.8667rem;
 }
 .legend > div {
   display: flex;
@@ -370,7 +394,7 @@ main {
   gap: 2px;
 }
 .stat .num {
-  font-size: 22px;
+  font-size: 1.4667rem;
 }
 
 /* ---- 棒グラフ ---- */
@@ -404,7 +428,7 @@ main {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
   text-align: center;
-  font-size: 11px;
+  font-size: 0.7333rem;
   color: var(--sub);
 }
 .bar-labels .on {
@@ -419,7 +443,7 @@ main {
   gap: 4px;
 }
 .month-switch .label {
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 900;
   min-width: 96px;
   text-align: center;
@@ -439,7 +463,7 @@ main {
   border: 0;
   border-radius: 9px;
   background: transparent;
-  font-size: 13px;
+  font-size: 0.8667rem;
   font-weight: 700;
   color: var(--sub);
 }
@@ -459,7 +483,7 @@ main {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--bg);
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--sub);
 }
@@ -481,7 +505,7 @@ main {
   gap: 6px;
 }
 .field-label {
-  font-size: 13px;
+  font-size: 0.8667rem;
   font-weight: 700;
   color: var(--sub);
 }
@@ -494,7 +518,7 @@ textarea.input {
   border-radius: 12px;
   border: 1px solid #c5d3d2;
   background: var(--bg);
-  font-size: 16px; /* 16px 未満だと iOS がズームする */
+  font-size: 1.0667rem;
 }
 textarea.input {
   min-height: 120px;
@@ -508,7 +532,7 @@ textarea.input {
 .amount-input {
   font-family: var(--num);
   font-weight: 900;
-  font-size: 40px;
+  font-size: 2.6667rem;
   border: 0;
   border-bottom: 2px solid var(--ink);
   border-radius: 0;
@@ -531,7 +555,7 @@ textarea.input {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--bg);
-  font-size: 13px;
+  font-size: 0.8667rem;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -546,7 +570,7 @@ textarea.input {
   align-items: center;
   gap: 10px;
   min-height: 44px;
-  font-size: 14px;
+  font-size: 0.9333rem;
 }
 .check input {
   width: 22px;
@@ -556,10 +580,7 @@ textarea.input {
 
 /* ---- タブバー ---- */
 .tabbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  flex-shrink: 0;
   height: var(--tabbar-h);
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--ink);
@@ -575,7 +596,7 @@ textarea.input {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  font-size: 11px;
+  font-size: 0.7333rem;
   color: #a9bdbd;
   min-height: 52px;
   justify-content: center;
@@ -635,6 +656,7 @@ textarea.input {
   background: var(--bg);
   z-index: 40;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   padding-bottom: calc(32px + env(safe-area-inset-bottom));
 }
 .group {
@@ -649,7 +671,7 @@ textarea.input {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 700;
   text-align: left;
 }
@@ -662,7 +684,7 @@ textarea.input {
 
 /* ---- ロック画面 ---- */
 .lock {
-  min-height: 100vh;
+  min-height: 100%;
   background: var(--teal);
   color: var(--ink);
   display: flex;
@@ -697,14 +719,14 @@ textarea.input {
   border: 0;
   background: rgba(255, 255, 255, 0.35);
   font-family: var(--num);
-  font-size: 28px;
+  font-size: 1.8667rem;
   font-weight: 700;
   color: var(--ink);
 }
 .keypad button.fn {
   background: transparent;
   font-family: var(--font);
-  font-size: 14px;
+  font-size: 0.9333rem;
 }
 .lock .input {
   background: rgba(255, 255, 255, 0.9);
@@ -712,7 +734,7 @@ textarea.input {
 }
 .lock-msg {
   min-height: 22px;
-  font-size: 14px;
+  font-size: 0.9333rem;
   font-weight: 700;
   text-align: center;
 }
@@ -759,7 +781,7 @@ body.veiled .veil {
   color: #fff;
   padding: 12px 18px;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: 0.9333rem;
   font-weight: 700;
   max-width: 420px;
 }
@@ -768,13 +790,13 @@ body.veiled .veil {
   text-align: center;
   padding: 32px 16px;
   color: var(--sub);
-  font-size: 14px;
+  font-size: 0.9333rem;
 }
 .notice {
   background: var(--teal-soft);
   border-radius: 14px;
   padding: 12px 14px;
-  font-size: 13px;
+  font-size: 0.8667rem;
 }
 .notice.warn {
   background: #fdeee2;
@@ -784,7 +806,7 @@ ol.howto,
 ul.plain {
   margin: 0;
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 0.9333rem;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -796,7 +818,7 @@ ul.plain {
 }
 .table-scroll table {
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 0.8rem;
   min-width: 100%;
 }
 .table-scroll td,

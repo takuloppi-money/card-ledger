@@ -5,7 +5,7 @@ import { byCategory, detectSubscriptions, increases, inMonth, sum, suggestions }
 import { payDateFor } from '../lib/billing';
 import { addMonths, dayLabel, monthLabel } from '../lib/dates';
 import { fmtDiff, fmtNum, fmtYen } from '../lib/format';
-import { store, useSettings, useTable } from '../lib/store';
+import { useTable } from '../lib/store';
 import type { Txn } from '../lib/types';
 import { NeedToggle } from '../components/ui';
 
@@ -21,7 +21,6 @@ export function Home({ month, setMonth, onEdit, onOpenSettings, onGo }: Props) {
   const txns = useTable('txns');
   const cards = useCards();
   const cats = useCategories();
-  const settings = useSettings();
   const goal = useTable('goals')[0];
 
   const d = useMemo(() => {
@@ -51,7 +50,6 @@ export function Home({ month, setMonth, onEdit, onOpenSettings, onGo }: Props) {
   const ratio = goalTotal ? Math.min(1, d.total / goalTotal) : 0;
   const over = goalTotal ? d.total > goalTotal : false;
   const payDate = cards.length === 1 ? payDateFor(month, cards[0]) : null;
-  const backupDue = store.all('txns').length > 0 && (!settings.lastBackupAt || Date.now() - settings.lastBackupAt > 30 * 86400_000);
 
   return (
     <>
@@ -61,7 +59,7 @@ export function Home({ month, setMonth, onEdit, onOpenSettings, onGo }: Props) {
             <button className="icon-btn" aria-label="前の月" onClick={() => setMonth(addMonths(month, -1))}>
               <Icon name="left" size={18} />
             </button>
-            <h1 style={{ fontSize: 17, padding: '0 6px' }}>{monthLabel(month)}の請求</h1>
+            <h1 style={{ fontSize: '1.1333rem', padding: '0 6px' }}>{monthLabel(month)}の請求</h1>
             <button className="icon-btn" aria-label="次の月" onClick={() => setMonth(addMonths(month, 1))}>
               <Icon name="right" size={18} />
             </button>
@@ -101,12 +99,6 @@ export function Home({ month, setMonth, onEdit, onOpenSettings, onGo }: Props) {
       </section>
 
       <div className="page">
-        {backupDue && (
-          <button className="notice warn row" style={{ border: 0, textAlign: 'left' }} onClick={onOpenSettings}>
-            <Icon name="download" size={18} />
-            <span className="grow">しばらくバックアップしていません。設定から暗号化バックアップを書き出しましょう。</span>
-          </button>
-        )}
 
         {d.cur.length === 0 ? (
           <div className="empty">
@@ -146,7 +138,7 @@ export function Home({ month, setMonth, onEdit, onOpenSettings, onGo }: Props) {
             {d.sugg && (
               <section className="card strong col gap-8">
                 <span className="eyebrow">見直し候補</span>
-                <h3 style={{ fontSize: 16 }}>{d.sugg.title}</h3>
+                <h3 style={{ fontSize: '1.0667rem' }}>{d.sugg.title}</h3>
                 <p className="small sub">{d.sugg.detail}</p>
                 <button className="btn small" style={{ alignSelf: 'flex-start', minHeight: 44 }} onClick={() => onGo('review')}>
                   確認する

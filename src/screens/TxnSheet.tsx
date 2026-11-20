@@ -88,7 +88,7 @@ export function TxnSheet({ txn, onClose }: { txn: Txn | null; onClose: () => voi
     <Sheet title={txn ? '明細を編集' : '支出を記録'} onClose={onClose}>
       <div className="col gap-4">
         <div className="row">
-          <span className="num" style={{ fontSize: 28 }}>
+          <span className="num" style={{ fontSize: '1.8667rem' }}>
             {refund ? '−¥' : '¥'}
           </span>
           <input

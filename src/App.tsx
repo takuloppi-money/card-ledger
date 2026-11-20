@@ -106,8 +106,9 @@ function Main({ onLock }: { onLock: () => void }) {
     };
   }, [onLock, settings.autoLockSec]);
 
+  const mainRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    window.scrollTo(0, 0);
+    mainRef.current?.scrollTo(0, 0);
   }, [tab]);
 
   if (!cards.length) {
@@ -135,8 +136,8 @@ function Main({ onLock }: { onLock: () => void }) {
   const common = { month: shownMonth, setMonth, onEdit: (t: Txn) => setEditing(t) };
 
   return (
-    <>
-      <main>
+    <div className="app-shell">
+      <main ref={mainRef}>
         {tab === 'home' && <Home {...common} onOpenSettings={() => setSettingsOpen(true)} onGo={setTab} />}
         {tab === 'txns' && <Txns {...common} />}
         {tab === 'analysis' && <Analysis {...common} />}
@@ -164,6 +165,6 @@ function Main({ onLock }: { onLock: () => void }) {
         )}
       </nav>
       {editing && <TxnSheet txn={editing === 'new' ? null : editing} onClose={() => setEditing(null)} />}
-    </>
+    </div>
   );
 }

@@ -3,7 +3,10 @@ import '@fontsource/archivo/latin-900.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import { applyFontSize } from './lib/fontSize';
 import './styles.css';
+
+applyFontSize();
 
 // 他のサイトに iframe で埋め込まれた場合は表示しない（クリックジャッキング対策。
 // GitHub Pages では frame-ancestors ヘッダーを付けられないため）

@@ -54,9 +54,6 @@ export function Sheet({ title, onClose, children }: { title: string; onClose: ()
 }
 
 export function FullPage({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <div className="full" role="dialog" aria-modal="true" aria-label={title}>
       <header className="page-head">

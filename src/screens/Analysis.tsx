@@ -54,7 +54,7 @@ export function Analysis({ month, setMonth }: { month: string; setMonth: (m: str
               >
                 {monthLabel(m.ym)}
                 <br />
-                <span className="num" style={{ fontSize: 10 }}>
+                <span className="num" style={{ fontSize: '0.6667rem' }}>
                   {m.total ? `${Math.round(m.total / 1000)}k` : '-'}
                 </span>
               </button>

@@ -32,7 +32,7 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
     return (
       <div className="lock" style={{ justifyContent: 'flex-start', alignItems: 'stretch', paddingTop: 'calc(48px + env(safe-area-inset-top))' }}>
         <div className="col gap-8">
-          <h1 style={{ fontSize: 28 }}>カード請求ノート</h1>
+          <h1 style={{ fontSize: '1.8667rem' }}>カード請求ノート</h1>
           <p>毎月のカード請求を記録して、少しずつ減らしていくためのアプリです。</p>
         </div>
         <div className="card col gap-8" style={{ borderColor: 'transparent' }}>
