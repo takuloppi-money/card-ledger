@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
-import { CatDot, MonthSwitch, NeedToggle, Seg, useCards, useCategories } from '../components/ui';
+import { CatDot, MonthSwitch, NeedToggle, Seg, toast, useCards, useCategories } from '../components/ui';
 import { inMonth, sum } from '../lib/analysis';
 import { dayLabel } from '../lib/dates';
 import { fmtYen } from '../lib/format';
-import { useTable } from '../lib/store';
+import { store, useTable } from '../lib/store';
 import { PAY_LABEL, type Txn } from '../lib/types';
 
 type Filter = 'all' | 'pending' | 'unrated' | 'want';
@@ -27,7 +27,7 @@ export function Txns({ month, setMonth, onEdit }: { month: string; setMonth: (m:
       if (g?.date === t.date) g.items.push(t);
       else groups.push({ date: t.date, items: [t] });
     }
-    return { groups, total: sum(xs), count: xs.length };
+    return { groups, total: sum(xs), count: xs.length, pending: xs.filter((t) => t.status === 'pending') };
   }, [txns, month, cardId, filter]);
 
   return (
@@ -57,6 +57,20 @@ export function Txns({ month, setMonth, onEdit }: { month: string; setMonth: (m:
               </option>
             ))}
           </select>
+        )}
+        {filter === 'pending' && list.pending.length > 0 && (
+          <button
+            className="btn block"
+            onClick={async () => {
+              const n = list.pending.length;
+              if (!confirm(`表示中の照合待ち ${n}件を、すべて確定にしますか？`)) return;
+              const now = Date.now();
+              await store.put('txns', ...list.pending.map((t) => ({ ...t, status: 'confirmed' as const, updatedAt: now })));
+              toast(`${n}件を確定にしました`);
+            }}
+          >
+            表示中の{list.pending.length}件をすべて確定にする
+          </button>
         )}
         <div className="row between">
           <span className="sub small">{list.count}件</span>

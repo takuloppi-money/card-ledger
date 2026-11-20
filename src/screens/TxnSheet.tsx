@@ -24,6 +24,7 @@ export function TxnSheet({ txn, onClose }: { txn: Txn | null; onClose: () => voi
   const [payType, setPayType] = useState<PayType>(txn?.payType ?? 'once');
   const [need, setNeed] = useState<Need | undefined>(txn?.need);
   const [memo, setMemo] = useState(txn?.memo ?? '');
+  const [status, setStatus] = useState<Txn['status']>(txn?.status ?? 'pending');
   const [busy, setBusy] = useState(false);
 
   const suggested = useMemo(() => suggestCategory(merchant, rules, txns), [merchant, rules, txns]);
@@ -65,7 +66,7 @@ export function TxnSheet({ txn, onClose }: { txn: Txn | null; onClose: () => voi
         need,
         memo: cleanMultiline(memo, 500) || undefined,
         source: txn?.source ?? 'manual',
-        status: txn?.status ?? 'pending',
+        status,
         importKey: txn?.importKey,
         createdAt: txn?.createdAt ?? now,
         updatedAt: now,
@@ -172,7 +173,27 @@ export function TxnSheet({ txn, onClose }: { txn: Txn | null; onClose: () => voi
         <input className="input" value={memo} maxLength={500} onChange={(e) => setMemo(e.target.value)} />
       </Field>
 
-      {txn?.status === 'pending' && <p className="notice">手入力の明細です。CSVを取り込むと、同じ金額・近い日付の明細と自動でまとめられます。</p>}
+      {txn?.source !== 'csv' && (
+        <Field
+          label="状態"
+          group
+          hint={
+            status === 'pending'
+              ? 'カードの明細で請求を確認できたら「確定」にしてください。CSVを取り込んだ場合は、同じ金額・近い日付の明細と自動でまとめて確定します。'
+              : '確定した明細は、CSVを取り込んでも照合の対象になりません。'
+          }
+        >
+          <Seg
+            label="状態"
+            value={status}
+            onChange={setStatus}
+            options={[
+              ['pending', '照合待ち'],
+              ['confirmed', '確定'],
+            ]}
+          />
+        </Field>
+      )}
 
       <button className="btn block" disabled={!valid || busy} onClick={save}>
         {txn ? '保存する' : '記録する'}
