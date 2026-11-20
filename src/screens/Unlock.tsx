@@ -131,8 +131,8 @@ export function Unlock({ meta, onUnlocked }: { meta: LockMeta; onUnlocked: () =>
   };
 
   const bioKey = meta.bio ? (
-    <button className="fn" aria-label="Face IDで解除" onClick={bio} disabled={busy}>
-      <Icon name="face" size={30} />
+    <button className="fn" aria-label="指紋・顔認証で解除" onClick={bio} disabled={busy}>
+      <Icon name="finger" size={30} />
     </button>
   ) : undefined;
 
@@ -152,7 +152,7 @@ export function Unlock({ meta, onUnlocked }: { meta: LockMeta; onUnlocked: () =>
       </div>
       {meta.bio && meta.mode === 'password' && (
         <button className="btn ink" onClick={bio} disabled={busy}>
-          <Icon name="face" /> Face IDで解除
+          <Icon name="finger" /> 指紋・顔認証で解除
         </button>
       )}
       <p className="lock-msg" role="alert">

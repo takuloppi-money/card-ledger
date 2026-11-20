@@ -38,7 +38,7 @@ export function Settings({ onClose, onLock }: { onClose: () => void; onLock: () 
       <Group title="カテゴリと自動分類" open={open === 'cats'} onToggle={() => toggle('cats')}>
         <Categories />
       </Group>
-      <Group title="ロック（PIN・Face ID）" open={open === 'lock'} onToggle={() => toggle('lock')}>
+      <Group title="ロック（PIN・指紋・顔認証）" open={open === 'lock'} onToggle={() => toggle('lock')}>
         <LockSettings />
       </Group>
       <Group title="バックアップを書き出す" open={open === 'backup'} onToggle={() => toggle('backup')}>
@@ -50,7 +50,7 @@ export function Settings({ onClose, onLock }: { onClose: () => void; onLock: () 
       <Group title="データの守り方" open={open === 'about'} onToggle={() => toggle('about')}>
         <ul className="plain">
           <li>記録はこのスマホのブラウザ領域にだけ保存され、サーバーやクラウドには送られません。</li>
-          <li>保存データはすべてAES-256で暗号化されています。鍵はPIN（またはFace ID）からしか取り出せません。</li>
+          <li>保存データはすべてAES-256で暗号化されています。鍵はPIN（または指紋・顔認証）からしか取り出せません。</li>
           <li>アプリは外部と通信しない設定（CSP）になっています。Claudeに送るのは、あなたが「Claudeに送る」を押したときの文章だけです。</li>
           <li>バックグラウンドに移ると画面を隠し、設定した時間がたつと自動でロックします。</li>
           <li>PINとバックアップのパスワードを両方忘れると、データは誰にも復元できません。</li>
@@ -342,14 +342,14 @@ function LockSettings() {
       <p className="tiny sub">操作しないまま5分たった場合もロックします。</p>
 
       <section className="col gap-8">
-        <h3>Face ID</h3>
+        <h3>指紋・顔認証</h3>
         {!bioOk ? (
-          <p className="small sub">この端末・ブラウザはFace IDによるデータ保護に対応していません（iOS 18以降のSafariで、ホーム画面に追加して使うと対応します）。</p>
+          <p className="small sub">この端末・ブラウザは、生体認証によるデータ保護に対応していません。iPhoneでは、Safariでホーム画面に追加して使い、端末の設定で指紋（Touch ID）または顔（Face ID）を登録しておく必要があります。</p>
         ) : meta?.bio ? (
           <>
             <p className="small">設定済みです。</p>
-            <button className="btn ghost" disabled={busy} onClick={() => confirm('Face IDでの解除をやめますか？') && run(disableBiometric, 'Face IDを解除しました')}>
-              Face IDをやめる
+            <button className="btn ghost" disabled={busy} onClick={() => confirm('指紋・顔認証での解除をやめますか？') && run(disableBiometric, '指紋・顔認証をやめました')}>
+              指紋・顔認証をやめる
             </button>
           </>
         ) : (
@@ -364,10 +364,10 @@ function LockSettings() {
                 run(async () => {
                   await enableBiometric(bioSecret);
                   setBioSecret('');
-                }, 'Face IDを設定しました')
+                }, '指紋・顔認証を設定しました')
               }
             >
-              <Icon name="face" /> Face IDを設定する
+              <Icon name="finger" /> 指紋・顔認証を設定する
             </button>
           </>
         )}
@@ -412,7 +412,7 @@ function LockSettings() {
       </section>
       <p className="tiny sub">
         現在：{meta?.mode === 'pin' ? '数字のPIN' : 'パスワード'}
-        {meta?.bio ? ' ＋ Face ID' : ''} ・ 鍵の導出 PBKDF2-SHA256 {meta?.iterations.toLocaleString()}回
+        {meta?.bio ? ' ＋ 指紋・顔認証' : ''} ・ 鍵の導出 PBKDF2-SHA256 {meta?.iterations.toLocaleString()}回
       </p>
     </div>
   );

@@ -39,7 +39,7 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
           <h3>データの守り方</h3>
           <ul className="plain">
             <li>記録はこのスマホの中だけに保存します。サーバーやクラウドには送りません。</li>
-            <li>保存するデータはすべて暗号化し、PIN（またはFace ID）で開きます。</li>
+            <li>保存するデータはすべて暗号化し、PIN（または指紋・顔認証）で開きます。</li>
             <li>
               <b>PINを忘れるとデータは取り出せません。</b>定期的に暗号化バックアップを書き出してください。
             </li>
@@ -181,10 +181,10 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
   // step === 'bio'
   return (
     <div className="lock">
-      <Icon name="face" size={48} />
+      <Icon name="finger" size={48} />
       <div className="col gap-8" style={{ alignItems: 'center', textAlign: 'center' }}>
-        <h1>Face IDを使いますか？</h1>
-        <p className="small">次回からFace IDでロックを解除できます。PINでも引き続き解除できます。</p>
+        <h1>指紋・顔認証を使いますか？</h1>
+        <p className="small">次回から指紋認証（Touch ID）または顔認証（Face ID）でロックを解除できます。使われるのは、この端末に登録済みの生体認証です。PINでも引き続き解除できます。</p>
       </div>
       <div className="col gap-8" style={{ width: '100%', maxWidth: 320 }}>
         <button
@@ -194,7 +194,7 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
             setBusy(true);
             try {
               await enableBiometric(secret);
-              toast('Face IDを設定しました');
+              toast('指紋・顔認証を設定しました');
               finish();
             } catch (e) {
               setMsg(e instanceof Error ? e.message : '設定できませんでした');
@@ -203,7 +203,7 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
             }
           }}
         >
-          Face IDを設定する
+          指紋・顔認証を設定する
         </button>
         <button className="btn outline block" onClick={finish}>
           あとで

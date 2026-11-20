@@ -20,6 +20,8 @@ const PATHS: Record<string, string> = {
   clock: 'M12 7v5l3 2',
   spark: 'M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6',
   card: 'M3 6h18v12H3zM3 10h18',
+  finger:
+    'M7.5 5.5A8 8 0 0 1 20 11v1M4.5 9A8 8 0 0 0 4 12v3M8 19.5A12 12 0 0 0 9 14v-2a3 3 0 0 1 6 0v1M12 12v2a16 16 0 0 1-1.5 7M15.5 16.5a20 20 0 0 1-.8 3.5M7 15v-3a5 5 0 0 1 10 0v2.5',
   backspace: 'M9 6h11v12H9l-6-6zM12 10l4 4M16 10l-4 4',
 };
 
